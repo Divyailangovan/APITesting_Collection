@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "497028ba-de24-46df-90a2-5243b879de97",
+		"name": "Hyundai_Labtest_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"id": "f33717a9-e483-4f3b-b049-53f2c8b833c0"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"checking the Content-Type\", function () {\r",
+							"   \r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"id": "88f4bcca-1b95-4a55-97d8-81d05c9bd9e5"
+					}
+				}
+			],
+			"_postman_id": "01e1e065-c437-4dae-8a35-3602496589ce",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{API}}/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Sucessful Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "9372dbd6-ae04-4eb2-a14d-2d9cea329f05"
+					}
+				}
+			],
+			"_postman_id": "1681c1b4-a52f-44ec-962f-4236638581a0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{API}}/login"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateSingleUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response =JSON.parse(responseBody);\r",
+							"console.log(\"Response is:\",response);\r",
+							"console.log(\"Name\", response.name);\r",
+							"pm.test(\"Checking the name\", function () {\r",
+							"    pm.expect(response.name).is.eql(\"DivyaILANGOVAN\");\r",
+							"});\r",
+							"console.log(\"Job\", response.job);\r",
+							"pm.test(\"Checking the Job\", function () {\r",
+							"    pm.expect(response.job).is.eql(\"QA\");\r",
+							"});\r",
+							"tests[\"check the status code \"]=responseCode.code == 201;\r",
+							""
+						],
+						"type": "text/javascript",
+						"id": "cc058d0f-f6e5-4e4d-9765-c250bca75eb2"
+					}
+				}
+			],
+			"_postman_id": "46971afd-22c8-408b-b340-e0b4fbc6e875",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"DivyaILANGOVAN\",\r\n    \"job\": \"QA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{API}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "RetriveValueFromPage2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"check the statuscode\"] =responseCode.code==200 ;\r",
+							"tests[\"check the responsebody\"] = responseBody.has(\"Michael\");\r",
+							"\r",
+							"\r",
+							"var response =JSON.parse(responseBody)\r",
+							"tests[\"check for page number\"]=response.page==2;\r",
+							"pm.test(\"Check the id\",function()\r",
+							"{\r",
+							"    pm.expect(response.data[0].id).to.eql(7);\r",
+							"     })"
+						],
+						"type": "text/javascript",
+						"id": "268b0070-8051-4436-b055-06d6156f6e96"
+					}
+				}
+			],
+			"_postman_id": "a632e263-7f1a-477f-8c7f-c0b0e182c00a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API}}/users?page=2",
+					"host": [
+						"{{API}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser-Using Datadriven",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Checking the names\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).eql(pm.iterationData.get(\"NAME\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking the Job\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.job).eql(pm.iterationData.get(\"JOB\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"id": "51bd60b2-a898-471a-934c-54d8f77f6e7a"
+					}
+				}
+			],
+			"_postman_id": "9b1a4ef9-742c-4f7f-b2b0-b6e819ed6526",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{NAME}}\",\r\n    \"job\": \"{{JOB}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{API}}/{{USERS}}"
+			},
+			"response": []
+		},
+		{
+			"name": "EditUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Updated name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.name).to.eql(\"Divya\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "0356290b-9690-42d0-8143-dadab9f3cbac"
+					}
+				}
+			],
+			"_postman_id": "3e0e0b1d-aecf-471a-bdaf-13c6b028d1fc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Divya\",\r\n    \"job\": \"TestManager\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{API}}/users/2"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code should be 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "c691f1ed-1c09-4628-96f2-77eb87ab010b"
+					}
+				}
+			],
+			"_postman_id": "2ff9291f-18c7-4046-9c1f-621a566b7d08",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{API}}/users/2"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "cd1bdfa4-4232-4e29-b874-15e6f55b5964"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "f65ae99c-7626-4354-83b5-8afe97154eb5"
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "3d5a6b61-dca1-4623-9e88-7e998add2809",
+			"key": "API",
+			"value": "https://reqres.in/api",
+			"type": "string"
+		},
+		{
+			"id": "7d0e34e0-049b-4b4f-ba02-f69a2c023ebd",
+			"key": "USERS",
+			"value": "users",
+			"type": "string"
+		}
+	]
+}
